@@ -50,14 +50,15 @@ public class TarefaResource {
 
     private final TarefaQueryService tarefaQueryService;
     
-    private final UserAuthorValidation userOwner;
+    //private final UserAuthorValidation userOwner;
 
+    public TarefaResource(TarefaService tarefaService, TarefaRepository tarefaRepository, TarefaQueryService tarefaQueryService) {
 
-    public TarefaResource(TarefaService tarefaService, TarefaRepository tarefaRepository, TarefaQueryService tarefaQueryService, UserAuthorValidation userOwner) {
+    //public TarefaResource(TarefaService tarefaService, TarefaRepository tarefaRepository, TarefaQueryService tarefaQueryService, UserAuthorValidation userOwner) {
         this.tarefaService = tarefaService;
         this.tarefaRepository = tarefaRepository;
         this.tarefaQueryService = tarefaQueryService;
-        this.userOwner = userOwner;
+       // this.userOwner = userOwner;
     }
 
     /**
@@ -75,7 +76,7 @@ public class TarefaResource {
         }
         
         ///exemplo de estrategia de adicionar o usuario ao id.
-        userOwner.setDTOUserId(new IdAddTarefaStrategy(tarefaDTO));
+       // userOwner.setDTOUserId(new IdAddTarefaStrategy(tarefaDTO));
         TarefaDTO result = tarefaService.save(tarefaDTO);
         return ResponseEntity
             .created(new URI("/api/tarefas/" + result.getId()))
@@ -164,7 +165,7 @@ public class TarefaResource {
     public ResponseEntity<List<TarefaDTO>> getAllTarefas(TarefaCriteria criteria, Pageable pageable) throws Exception {
         log.debug("REST request to get Tarefas by criteria: {}", criteria);
         
-         userOwner.setUserOwnerIDFilter(criteria);
+        // userOwner.setUserOwnerIDFilter(criteria);
         Page<TarefaDTO> page = tarefaQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());

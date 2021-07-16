@@ -4,9 +4,7 @@ import com.todo.domain.Authority;
 import com.todo.domain.User;
 import com.todo.repository.UserRepository;
 import com.todo.security.AuthoritiesConstants;
-import com.todo.service.dto.TarefaDTO;
 import com.todo.service.mapper.UserMapper;
-import java.security.InvalidAlgorithmParameterException;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +13,6 @@ import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.LongFilter;
 import com.todo.service.dto.UserDTO;
 import com.todo.web.rest.errors.BadRequestAlertException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +35,7 @@ public class UserAuthorValidation {
     }
 
     @Transactional
-    public void setUserOwnerIDFilter(Criteria criteria) throws InvalidAlgorithmParameterException, NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public void setUserOwnerIDFilter(Criteria criteria) throws Exception {
 
         User user = getCurrentUser();
         Set<Authority> authories = user.getAuthorities();
@@ -54,7 +51,7 @@ public class UserAuthorValidation {
     }
 
     @Transactional
-    private User getCurrentUser() throws BadRequestAlertException {
+    private User getCurrentUser() throws  Exception {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
@@ -63,13 +60,13 @@ public class UserAuthorValidation {
         }
         Optional<User> user = userRepository.findOneByLogin(username);
         if (user.isEmpty()) {
-            throw new BadRequestAlertException("user not found ", "USER", "user not found");
+            throw new Exception("user not found ");
         }
         return user.get();
     }
 
     @Transactional
-    public void setDTOUserId(IdAddTarefaStrategy strategy) throws BadRequestAlertException {
+    public void setDTOUserId(IdAddTarefaStrategy strategy) throws Exception {
         User user = getCurrentUser();
         UserDTO userDTO = userMapper.userToUserDTO(user);
         strategy.addId(userDTO);
