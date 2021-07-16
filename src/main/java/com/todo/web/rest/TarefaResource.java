@@ -3,11 +3,14 @@ package com.todo.web.rest;
 import com.todo.repository.TarefaRepository;
 import com.todo.service.TarefaQueryService;
 import com.todo.service.TarefaService;
+import com.todo.service.criteria.IdAddTarefaStrategy;
 import com.todo.service.criteria.TarefaCriteria;
+import com.todo.service.criteria.UserAuthorValidation;
 import com.todo.service.dto.TarefaDTO;
 import com.todo.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.InvalidAlgorithmParameterException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -46,11 +49,15 @@ public class TarefaResource {
     private final TarefaRepository tarefaRepository;
 
     private final TarefaQueryService tarefaQueryService;
+    
+    private final UserAuthorValidation userOwner;
 
-    public TarefaResource(TarefaService tarefaService, TarefaRepository tarefaRepository, TarefaQueryService tarefaQueryService) {
+
+    public TarefaResource(TarefaService tarefaService, TarefaRepository tarefaRepository, TarefaQueryService tarefaQueryService, UserAuthorValidation userOwner) {
         this.tarefaService = tarefaService;
         this.tarefaRepository = tarefaRepository;
         this.tarefaQueryService = tarefaQueryService;
+        this.userOwner = userOwner;
     }
 
     /**
@@ -66,6 +73,9 @@ public class TarefaResource {
         if (tarefaDTO.getId() != null) {
             throw new BadRequestAlertException("A new tarefa cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        
+        ///exemplo de estrategia de adicionar o usuario ao id.
+        userOwner.setDTOUserId(new IdAddTarefaStrategy(tarefaDTO));
         TarefaDTO result = tarefaService.save(tarefaDTO);
         return ResponseEntity
             .created(new URI("/api/tarefas/" + result.getId()))
@@ -151,8 +161,10 @@ public class TarefaResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tarefas in body.
      */
     @GetMapping("/tarefas")
-    public ResponseEntity<List<TarefaDTO>> getAllTarefas(TarefaCriteria criteria, Pageable pageable) {
+    public ResponseEntity<List<TarefaDTO>> getAllTarefas(TarefaCriteria criteria, Pageable pageable) throws Exception {
         log.debug("REST request to get Tarefas by criteria: {}", criteria);
+        
+         userOwner.setUserOwnerIDFilter(criteria);
         Page<TarefaDTO> page = tarefaQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
