@@ -1,0 +1,29 @@
+{
+  "todo2App": {
+    "tarefa": {
+      "home": {
+        "title": "Tarefas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Tarefa",
+        "createOrEditLabel": "Criar ou editar Tarefa",
+        "notFound": "Nenhum Tarefas encontrado"
+      },
+      "created": "Um novo Tarefa foi criado com o identificador {{ param }}",
+      "updated": "Tarefa com identificador {{ param }} foi actualizado",
+      "deleted": "Tarefa com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Tarefa {{ id }}?"
+      },
+      "detail": {
+        "title": "Tarefa"
+      },
+      "id": "ID",
+      "descricao": "Descricao",
+      "dueDate": "Due Date",
+      "crateDate": "Crate Date",
+      "status": "Status",
+      "user": "User",
+      "categoria": "Categoria"
+    }
+  }
+}

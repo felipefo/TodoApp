@@ -1,0 +1,10 @@
+{
+  "todo2App": {
+    "Status": {
+      "null": "",
+      "AFAZER": "Afazer",
+      "FAZENDO": "Fazendo",
+      "FEITO": "Feito"
+    }
+  }
+}

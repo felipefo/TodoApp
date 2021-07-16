@@ -1,0 +1,36 @@
+enum Status {
+  AFAZER (Afazer),
+  FAZENDO (Fazendo),
+  FEITO (Feito)
+  
+}
+entity Tarefa {
+    descricao String required
+    dueDate Instant,
+    crateDate Instant,
+    status Status required,
+}
+
+entity Categoria {
+    descricao String required
+}
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+    Categoria to Tarefa,
+}
+
+
+relationship ManyToOne {
+  Tarefa {user(login)} to User
+  Categoria{user(login)} to User
+}
+
+dto * with mapstruct
+filter *
+service * with serviceClass
+
+
+paginate Tarefa with pagination
+paginate Categoria with pagination

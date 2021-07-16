@@ -1,0 +1,26 @@
+{
+  "todo2App": {
+    "categoria": {
+      "home": {
+        "title": "Categorias",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Categoria",
+        "createOrEditLabel": "Criar ou editar Categoria",
+        "notFound": "Nenhum Categorias encontrado"
+      },
+      "created": "Um novo Categoria foi criado com o identificador {{ param }}",
+      "updated": "Categoria com identificador {{ param }} foi actualizado",
+      "deleted": "Categoria com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Categoria {{ id }}?"
+      },
+      "detail": {
+        "title": "Categoria"
+      },
+      "id": "ID",
+      "descricao": "Descricao",
+      "tarefa": "Tarefa",
+      "user": "User"
+    }
+  }
+}
