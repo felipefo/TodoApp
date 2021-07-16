@@ -52,6 +52,7 @@ public class UserAuthorValidation {
 
     @Transactional
     private User getCurrentUser() throws  Exception {
+        
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
