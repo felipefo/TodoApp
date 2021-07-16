@@ -43,6 +43,9 @@
     "clientThemeVariant": "",
     "languages": ["pt-br", "pt-pt"],
     "entities": ["Tarefa", "Categoria"],
-    "lastLiquibaseTimestamp": 1626455822000
+    "lastLiquibaseTimestamp": 1626455822000,
+    "herokuAppName": "todolist",
+    "herokuDeployType": "jar",
+    "herokuJavaVersion": "11"
   }
 }
