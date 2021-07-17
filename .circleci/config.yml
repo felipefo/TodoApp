@@ -44,12 +44,12 @@ jobs:
             - run:
                 name: Give Executable Power
                 command: 'chmod +x mvnw'
-            - run:
-                name: Backend tests
-                command: npm run ci:backend:test
-            - run:
-                name: Run Front End Tests
-                command: npm run ci:frontend:test
+           #  - run:
+           #      name: Backend tests
+           #      command: npm run ci:backend:test
+            # - run:
+            #     name: Run Front End Tests
+            #     command: npm run ci:frontend:test
             - run:
                 name: Deploy to Heroku
                 command: './mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=todolist'
