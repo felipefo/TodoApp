@@ -52,4 +52,4 @@ jobs:
             #     command: npm run ci:frontend:test
             - run:
                 name: Deploy to Heroku
-                command: './mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=todolist'
+                command: './mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=peaceful-dawn-25145'
