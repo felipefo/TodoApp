@@ -1,6 +1,7 @@
 package com.todo.web.rest;
 
 import com.todo.domain.Tarefa;
+import com.todo.domain.User;
 import com.todo.repository.TarefaRepository;
 import com.todo.service.TarefaQueryService;
 import com.todo.service.TarefaService;
@@ -244,8 +245,15 @@ public class TarefaResource {
         log.debug("REST request to delete Tarefa : {}", id);
         
        
-        Tarefa tarefa  = tarefaRepository.getOne(id);
-        if(!addUserId.checkOwnerDTOId(tarefa.getUser().getId())){
+        Optional<TarefaDTO> tarefaDTO = tarefaService.findOne(id);
+        UserDTO user = tarefaDTO.get().getUser();
+        Long idUser = null;
+        if(user != null){
+          idUser = user.getId();
+        }
+        
+        
+        if(!addUserId.checkOwnerDTOId(idUser)){
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "id not found");
         }
        
