@@ -28,8 +28,8 @@ public class Tarefa implements Serializable {
     @Column(name = "due_date")
     private Instant dueDate;
 
-    @Column(name = "crate_date")
-    private Instant crateDate;
+    @Column(name = "date_criacao")
+    private Instant dateCriacao;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -83,17 +83,17 @@ public class Tarefa implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public Instant getCrateDate() {
-        return this.crateDate;
+    public Instant getDateCriacao() {
+        return this.dateCriacao;
     }
 
-    public Tarefa crateDate(Instant crateDate) {
-        this.crateDate = crateDate;
+    public Tarefa dateCriacao(Instant dateCriacao) {
+        this.dateCriacao = dateCriacao;
         return this;
     }
 
-    public void setCrateDate(Instant crateDate) {
-        this.crateDate = crateDate;
+    public void setDateCriacao(Instant dateCriacao) {
+        this.dateCriacao = dateCriacao;
     }
 
     public Status getStatus() {
@@ -161,7 +161,7 @@ public class Tarefa implements Serializable {
             "id=" + getId() +
             ", descricao='" + getDescricao() + "'" +
             ", dueDate='" + getDueDate() + "'" +
-            ", crateDate='" + getCrateDate() + "'" +
+            ", dateCriacao='" + getDateCriacao() + "'" +
             ", status='" + getStatus() + "'" +
             "}";
     }

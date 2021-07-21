@@ -99,8 +99,8 @@ export const Tarefa = (props: ITarefaProps) => {
                 <th className="hand" onClick={sort('dueDate')}>
                   <Translate contentKey="todo2App.tarefa.dueDate">Due Date</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('crateDate')}>
-                  <Translate contentKey="todo2App.tarefa.crateDate">Crate Date</Translate> <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={sort('dateCriacao')}>
+                  <Translate contentKey="todo2App.tarefa.dateCriacao">Date Criacao</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('status')}>
                   <Translate contentKey="todo2App.tarefa.status">Status</Translate> <FontAwesomeIcon icon="sort" />
@@ -124,7 +124,7 @@ export const Tarefa = (props: ITarefaProps) => {
                   </td>
                   <td>{tarefa.descricao}</td>
                   <td>{tarefa.dueDate ? <TextFormat type="date" value={tarefa.dueDate} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>{tarefa.crateDate ? <TextFormat type="date" value={tarefa.crateDate} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{tarefa.dateCriacao ? <TextFormat type="date" value={tarefa.dateCriacao} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>
                     <Translate contentKey={`todo2App.Status.${tarefa.status}`} />
                   </td>

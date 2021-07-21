@@ -49,7 +49,7 @@ public class TarefaCriteria implements Serializable, Criteria {
 
     private InstantFilter dueDate;
 
-    private InstantFilter crateDate;
+    private InstantFilter dateCriacao;
 
     private StatusFilter status;
 
@@ -63,7 +63,7 @@ public class TarefaCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.descricao = other.descricao == null ? null : other.descricao.copy();
         this.dueDate = other.dueDate == null ? null : other.dueDate.copy();
-        this.crateDate = other.crateDate == null ? null : other.crateDate.copy();
+        this.dateCriacao = other.dateCriacao == null ? null : other.dateCriacao.copy();
         this.status = other.status == null ? null : other.status.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
         this.categoriaId = other.categoriaId == null ? null : other.categoriaId.copy();
@@ -119,19 +119,19 @@ public class TarefaCriteria implements Serializable, Criteria {
         this.dueDate = dueDate;
     }
 
-    public InstantFilter getCrateDate() {
-        return crateDate;
+    public InstantFilter getDateCriacao() {
+        return dateCriacao;
     }
 
-    public InstantFilter crateDate() {
-        if (crateDate == null) {
-            crateDate = new InstantFilter();
+    public InstantFilter dateCriacao() {
+        if (dateCriacao == null) {
+            dateCriacao = new InstantFilter();
         }
-        return crateDate;
+        return dateCriacao;
     }
 
-    public void setCrateDate(InstantFilter crateDate) {
-        this.crateDate = crateDate;
+    public void setDateCriacao(InstantFilter dateCriacao) {
+        this.dateCriacao = dateCriacao;
     }
 
     public StatusFilter getStatus() {
@@ -192,7 +192,7 @@ public class TarefaCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(descricao, that.descricao) &&
             Objects.equals(dueDate, that.dueDate) &&
-            Objects.equals(crateDate, that.crateDate) &&
+            Objects.equals(dateCriacao, that.dateCriacao) &&
             Objects.equals(status, that.status) &&
             Objects.equals(userId, that.userId) &&
             Objects.equals(categoriaId, that.categoriaId)
@@ -201,7 +201,7 @@ public class TarefaCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, descricao, dueDate, crateDate, status, userId, categoriaId);
+        return Objects.hash(id, descricao, dueDate, dateCriacao, status, userId, categoriaId);
     }
 
     // prettier-ignore
@@ -211,7 +211,7 @@ public class TarefaCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (descricao != null ? "descricao=" + descricao + ", " : "") +
             (dueDate != null ? "dueDate=" + dueDate + ", " : "") +
-            (crateDate != null ? "crateDate=" + crateDate + ", " : "") +
+            (dateCriacao != null ? "dateCriacao=" + dateCriacao + ", " : "") +
             (status != null ? "status=" + status + ", " : "") +
             (userId != null ? "userId=" + userId + ", " : "") +
             (categoriaId != null ? "categoriaId=" + categoriaId + ", " : "") +

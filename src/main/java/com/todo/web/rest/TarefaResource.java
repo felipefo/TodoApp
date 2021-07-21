@@ -1,19 +1,21 @@
 package com.todo.web.rest;
 
+import com.todo.domain.Tarefa;
 import com.todo.repository.TarefaRepository;
 import com.todo.service.TarefaQueryService;
 import com.todo.service.TarefaService;
-import com.todo.service.criteria.IdAddTarefaStrategy;
 import com.todo.service.criteria.TarefaCriteria;
-import com.todo.service.criteria.UserAuthorValidation;
+import com.todo.service.criteria.useridvalidation.AddIddTarefaStrategy;
+import com.todo.service.criteria.useridvalidation.AddUserId;
 import com.todo.service.dto.TarefaDTO;
+import com.todo.service.dto.UserDTO;
 import com.todo.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.InvalidAlgorithmParameterException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -50,15 +52,14 @@ public class TarefaResource {
 
     private final TarefaQueryService tarefaQueryService;
     
-    //private final UserAuthorValidation userOwner;
+    private final AddUserId addUserId;
 
-    public TarefaResource(TarefaService tarefaService, TarefaRepository tarefaRepository, TarefaQueryService tarefaQueryService) {
 
-    //public TarefaResource(TarefaService tarefaService, TarefaRepository tarefaRepository, TarefaQueryService tarefaQueryService, UserAuthorValidation userOwner) {
+    public TarefaResource(TarefaService tarefaService, TarefaRepository tarefaRepository, TarefaQueryService tarefaQueryService, AddUserId addUserId) {
         this.tarefaService = tarefaService;
         this.tarefaRepository = tarefaRepository;
         this.tarefaQueryService = tarefaQueryService;
-       // this.userOwner = userOwner;
+        this.addUserId =  addUserId;
     }
 
     /**
@@ -74,9 +75,11 @@ public class TarefaResource {
         if (tarefaDTO.getId() != null) {
             throw new BadRequestAlertException("A new tarefa cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        
-        ///exemplo de estrategia de adicionar o usuario ao id.
-       // userOwner.setDTOUserId(new IdAddTarefaStrategy(tarefaDTO));
+        try {
+            addUserId.setDTOUserId(new AddIddTarefaStrategy(tarefaDTO , TarefaDTO.class));
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(TarefaResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
         TarefaDTO result = tarefaService.save(tarefaDTO);
         return ResponseEntity
             .created(new URI("/api/tarefas/" + result.getId()))
@@ -98,17 +101,24 @@ public class TarefaResource {
     public ResponseEntity<TarefaDTO> updateTarefa(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody TarefaDTO tarefaDTO
-    ) throws URISyntaxException {
+    ) throws URISyntaxException, Exception {
         log.debug("REST request to update Tarefa : {}, {}", id, tarefaDTO);
         if (tarefaDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "id null");
+        }
+        if (tarefaDTO.getUser()== null) {
+            throw new BadRequestAlertException("Invalid user", ENTITY_NAME, "usuario nao pode ser nulo");
         }
         if (!Objects.equals(id, tarefaDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "id invalid");
         }
 
         if (!tarefaRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "id not found");
+        }
+        
+        if (!addUserId.checkOwnerDTOId(tarefaDTO.getUser().getId())){
+            throw new BadRequestAlertException("Operation not allowed", ENTITY_NAME, "operacao nao permitida"); 
         }
 
         TarefaDTO result = tarefaService.save(tarefaDTO);
@@ -133,7 +143,7 @@ public class TarefaResource {
     public ResponseEntity<TarefaDTO> partialUpdateTarefa(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody TarefaDTO tarefaDTO
-    ) throws URISyntaxException {
+    ) throws URISyntaxException, Exception {
         log.debug("REST request to partial update Tarefa partially : {}, {}", id, tarefaDTO);
         if (tarefaDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -144,6 +154,10 @@ public class TarefaResource {
 
         if (!tarefaRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+        
+        if (!addUserId.checkOwnerDTOId(tarefaDTO.getUser().getId())){
+            throw new BadRequestAlertException("Operation not allowed", ENTITY_NAME, "operacao nao permitida"); 
         }
 
         Optional<TarefaDTO> result = tarefaService.partialUpdate(tarefaDTO);
@@ -162,10 +176,15 @@ public class TarefaResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tarefas in body.
      */
     @GetMapping("/tarefas")
-    public ResponseEntity<List<TarefaDTO>> getAllTarefas(TarefaCriteria criteria, Pageable pageable) throws Exception {
+    public ResponseEntity<List<TarefaDTO>> getAllTarefas(TarefaCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Tarefas by criteria: {}", criteria);
         
-        // userOwner.setUserOwnerIDFilter(criteria);
+         try {
+            addUserId.setUserOwnerIDFilter(criteria, TarefaCriteria.class);
+        } catch (Exception ex) {
+           // java.util.logging.Logger.getLogger(TarefaResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         Page<TarefaDTO> page = tarefaQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
@@ -180,6 +199,13 @@ public class TarefaResource {
     @GetMapping("/tarefas/count")
     public ResponseEntity<Long> countTarefas(TarefaCriteria criteria) {
         log.debug("REST request to count Tarefas by criteria: {}", criteria);
+        
+         try {
+            addUserId.setUserOwnerIDFilter(criteria, TarefaCriteria.class);
+        } catch (Exception ex) {
+           // java.util.logging.Logger.getLogger(TarefaResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return ResponseEntity.ok().body(tarefaQueryService.countByCriteria(criteria));
     }
 
@@ -190,9 +216,20 @@ public class TarefaResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tarefaDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/tarefas/{id}")
-    public ResponseEntity<TarefaDTO> getTarefa(@PathVariable Long id) {
+    public ResponseEntity<TarefaDTO> getTarefa(@PathVariable Long id) throws Exception {
         log.debug("REST request to get Tarefa : {}", id);
+        
         Optional<TarefaDTO> tarefaDTO = tarefaService.findOne(id);
+        UserDTO user = tarefaDTO.get().getUser();
+        Long idUser = null;
+        if(user != null){
+          idUser = user.getId();
+        }
+         if (!addUserId.checkOwnerDTOId(idUser)){
+            throw new BadRequestAlertException("Operation not allowed", ENTITY_NAME, "operacao nao permitida"); 
+        }
+        
+        
         return ResponseUtil.wrapOrNotFound(tarefaDTO);
     }
 
@@ -203,8 +240,15 @@ public class TarefaResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/tarefas/{id}")
-    public ResponseEntity<Void> deleteTarefa(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTarefa(@PathVariable Long id) throws Exception {
         log.debug("REST request to delete Tarefa : {}", id);
+        
+       
+        Tarefa tarefa  = tarefaRepository.getOne(id);
+        if(!addUserId.checkOwnerDTOId(tarefa.getUser().getId())){
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "id not found");
+        }
+       
         tarefaService.delete(id);
         return ResponseEntity
             .noContent()

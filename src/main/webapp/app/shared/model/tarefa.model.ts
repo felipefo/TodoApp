@@ -7,7 +7,7 @@ export interface ITarefa {
   id?: number;
   descricao?: string;
   dueDate?: string | null;
-  crateDate?: string | null;
+  dateCriacao?: string | null;
   status?: Status;
   user?: IUser | null;
   categoria?: ICategoria | null;

@@ -7,7 +7,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Categoria} and its DTO {@link CategoriaDTO}.
  */
-@Mapper(componentModel = "spring", uses = { UserMapper.class, TarefaMapper.class })
+@Mapper(componentModel = "spring", uses = { UserMapper.class })
 public interface CategoriaMapper extends EntityMapper<CategoriaDTO, Categoria> {
     @Mapping(target = "user", source = "user", qualifiedByName = "login")
     CategoriaDTO toDto(Categoria s);

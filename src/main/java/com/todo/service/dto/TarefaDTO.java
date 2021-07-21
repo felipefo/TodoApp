@@ -18,7 +18,7 @@ public class TarefaDTO implements Serializable {
 
     private Instant dueDate;
 
-    private Instant crateDate;
+    private Instant dateCriacao;
 
     @NotNull
     private Status status;
@@ -51,12 +51,12 @@ public class TarefaDTO implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public Instant getCrateDate() {
-        return crateDate;
+    public Instant getDateCriacao() {
+        return dateCriacao;
     }
 
-    public void setCrateDate(Instant crateDate) {
-        this.crateDate = crateDate;
+    public void setDateCriacao(Instant dateCriacao) {
+        this.dateCriacao = dateCriacao;
     }
 
     public Status getStatus() {
@@ -111,7 +111,7 @@ public class TarefaDTO implements Serializable {
             "id=" + getId() +
             ", descricao='" + getDescricao() + "'" +
             ", dueDate='" + getDueDate() + "'" +
-            ", crateDate='" + getCrateDate() + "'" +
+            ", dateCriacao='" + getDateCriacao() + "'" +
             ", status='" + getStatus() + "'" +
             ", user=" + getUser() +
             ", categoria=" + getCategoria() +

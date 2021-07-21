@@ -11,13 +11,13 @@
       "fieldType": "Instant"
     },
     {
-      "fieldName": "crateDate",
+      "fieldName": "dateCriacao",
       "fieldType": "Instant"
     },
     {
       "fieldName": "status",
       "fieldType": "Status",
-      "fieldValues": "AFAZER (Afazer),FAZENDO (Fazendo),FEITO (Feito)",
+      "fieldValues": "AFAZER (Afazer),FAZENDO (Fazendo),FEITA (Feita),ARQUIVADA (Arquivada)",
       "fieldValidateRules": ["required"]
     }
   ],

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.todo.service.criteria;
+package com.todo.service.criteria.useridvalidation;
 
 import com.todo.service.dto.UserDTO;
 
@@ -11,9 +11,9 @@ import com.todo.service.dto.UserDTO;
  *
  * @author felipe
  */
-public interface IdAddStrategy {
+public interface AddIdStrategy {
     
     
-    public void addId(UserDTO userDTO);
+    public void addUserId(UserDTO userDTO);
     
 }

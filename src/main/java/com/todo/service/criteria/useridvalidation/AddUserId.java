@@ -1,4 +1,4 @@
-package com.todo.service.criteria;
+package com.todo.service.criteria.useridvalidation;
 
 import com.todo.domain.Authority;
 import com.todo.domain.User;
@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.LongFilter;
 import com.todo.service.dto.UserDTO;
-import com.todo.web.rest.errors.BadRequestAlertException;
 import java.lang.reflect.Method;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,20 +21,35 @@ import org.springframework.transaction.annotation.Transactional;
  * @author felipe
  */
 @Repository
-
-public class UserAuthorValidation {
+public class AddUserId {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserAuthorValidation(UserMapper userMapper, UserRepository userRepository) {
+    public AddUserId(UserMapper userMapper, UserRepository userRepository) {
 
         this.userMapper = userMapper;
         this.userRepository = userRepository;
     }
+    
+    
+    @Transactional
+    public boolean checkOwnerDTOId(Long userDTOId) throws Exception {
+        User user = getCurrentUser();
+        Set<Authority> authories = user.getAuthorities();
+        for (Authority aut : authories) {
+            if (aut.getName().equalsIgnoreCase(AuthoritiesConstants.ADMIN)) {
+                return true;//admin can do everything.  
+            }
+        }
+        if(user.getId().compareTo(userDTOId) == 0)
+            return true;
+        return false;
+    }
+    
 
     @Transactional
-    public void setUserOwnerIDFilter(Criteria criteria) throws Exception {
+    public void setUserOwnerIDFilter(Criteria criteria , Class clazz) throws Exception {
 
         User user = getCurrentUser();
         Set<Authority> authories = user.getAuthorities();
@@ -46,13 +60,12 @@ public class UserAuthorValidation {
         }
         LongFilter filter = new LongFilter();
         filter.setEquals(user.getId());
-        Method sumInstanceMethod = Criteria.class.getMethod("setId", LongFilter.class);
-        sumInstanceMethod.invoke(criteria, filter);
+        Method sumInstanceMethod =  clazz.getMethod("setUserId", LongFilter.class);
+        sumInstanceMethod.invoke(clazz.cast(criteria), filter);
     }
 
     @Transactional
-    private User getCurrentUser() throws  Exception {
-        
+    private User getCurrentUser() throws Exception {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
@@ -61,15 +74,15 @@ public class UserAuthorValidation {
         }
         Optional<User> user = userRepository.findOneByLogin(username);
         if (user.isEmpty()) {
-            throw new Exception("user not found ");
+            throw new Exception("user not found " + username);
         }
         return user.get();
     }
 
     @Transactional
-    public void setDTOUserId(IdAddTarefaStrategy strategy) throws Exception {
+    public void setDTOUserId(AddIdStrategy strategy) throws Exception {
         User user = getCurrentUser();
         UserDTO userDTO = userMapper.userToUserDTO(user);
-        strategy.addId(userDTO);
+        strategy.addUserId(userDTO);
     }
 }

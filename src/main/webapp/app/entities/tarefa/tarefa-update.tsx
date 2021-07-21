@@ -46,7 +46,7 @@ export const TarefaUpdate = (props: ITarefaUpdateProps) => {
 
   const saveEntity = (event, errors, values) => {
     values.dueDate = convertDateTimeToServer(values.dueDate);
-    values.crateDate = convertDateTimeToServer(values.crateDate);
+    values.dateCriacao = convertDateTimeToServer(values.dateCriacao);
 
     if (errors.length === 0) {
       const entity = {
@@ -116,17 +116,17 @@ export const TarefaUpdate = (props: ITarefaUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="crateDateLabel" for="tarefa-crateDate">
-                  <Translate contentKey="todo2App.tarefa.crateDate">Crate Date</Translate>
+                <Label id="dateCriacaoLabel" for="tarefa-dateCriacao">
+                  <Translate contentKey="todo2App.tarefa.dateCriacao">Date Criacao</Translate>
                 </Label>
                 <AvInput
-                  id="tarefa-crateDate"
-                  data-cy="crateDate"
+                  id="tarefa-dateCriacao"
+                  data-cy="dateCriacao"
                   type="datetime-local"
                   className="form-control"
-                  name="crateDate"
+                  name="dateCriacao"
                   placeholder={'YYYY-MM-DD HH:mm'}
-                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.tarefaEntity.crateDate)}
+                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.tarefaEntity.dateCriacao)}
                 />
               </AvGroup>
               <AvGroup>
@@ -143,7 +143,8 @@ export const TarefaUpdate = (props: ITarefaUpdateProps) => {
                 >
                   <option value="AFAZER">{translate('todo2App.Status.AFAZER')}</option>
                   <option value="FAZENDO">{translate('todo2App.Status.FAZENDO')}</option>
-                  <option value="FEITO">{translate('todo2App.Status.FEITO')}</option>
+                  <option value="FEITA">{translate('todo2App.Status.FEITA')}</option>
+                  <option value="ARQUIVADA">{translate('todo2App.Status.ARQUIVADA')}</option>
                 </AvInput>
               </AvGroup>
               <AvGroup>

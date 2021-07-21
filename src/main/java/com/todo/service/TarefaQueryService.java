@@ -92,8 +92,8 @@ public class TarefaQueryService extends QueryService<Tarefa> {
             if (criteria.getDueDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDueDate(), Tarefa_.dueDate));
             }
-            if (criteria.getCrateDate() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCrateDate(), Tarefa_.crateDate));
+            if (criteria.getDateCriacao() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getDateCriacao(), Tarefa_.dateCriacao));
             }
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildSpecification(criteria.getStatus(), Tarefa_.status));

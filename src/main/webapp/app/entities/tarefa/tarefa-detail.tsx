@@ -43,11 +43,11 @@ export const TarefaDetail = (props: ITarefaDetailProps) => {
           </dt>
           <dd>{tarefaEntity.dueDate ? <TextFormat value={tarefaEntity.dueDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
           <dt>
-            <span id="crateDate">
-              <Translate contentKey="todo2App.tarefa.crateDate">Crate Date</Translate>
+            <span id="dateCriacao">
+              <Translate contentKey="todo2App.tarefa.dateCriacao">Date Criacao</Translate>
             </span>
           </dt>
-          <dd>{tarefaEntity.crateDate ? <TextFormat value={tarefaEntity.crateDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dd>{tarefaEntity.dateCriacao ? <TextFormat value={tarefaEntity.dateCriacao} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
           <dt>
             <span id="status">
               <Translate contentKey="todo2App.tarefa.status">Status</Translate>

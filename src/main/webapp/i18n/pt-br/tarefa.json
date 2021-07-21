@@ -20,7 +20,7 @@
       "id": "ID",
       "descricao": "Descricao",
       "dueDate": "Due Date",
-      "crateDate": "Crate Date",
+      "dateCriacao": "Date Criacao",
       "status": "Status",
       "user": "User",
       "categoria": "Categoria"

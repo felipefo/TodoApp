@@ -6,7 +6,8 @@ package com.todo.domain.enumeration;
 public enum Status {
     AFAZER("Afazer"),
     FAZENDO("Fazendo"),
-    FEITO("Feito");
+    FEITA("Feita"),
+    ARQUIVADA("Arquivada");
 
     private final String value;
 

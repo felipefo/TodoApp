@@ -1,13 +1,14 @@
 enum Status {
   AFAZER (Afazer),
   FAZENDO (Fazendo),
-  FEITO (Feito)
+  FEITA (Feita),
+  ARQUIVADA (Arquivada)
   
 }
 entity Tarefa {
     descricao String required
     dueDate Instant,
-    crateDate Instant,
+    dateCriacao Instant, 
     status Status required,
 }
 

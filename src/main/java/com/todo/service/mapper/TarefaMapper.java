@@ -10,11 +10,6 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = { UserMapper.class, CategoriaMapper.class })
 public interface TarefaMapper extends EntityMapper<TarefaDTO, Tarefa> {
     @Mapping(target = "user", source = "user", qualifiedByName = "login")
-   //restringindo somente o id no retorno 
-   //@Mapping(target = "categoria", source = "categoria", qualifiedByName = "id")
-            
-  
-         
-            
+    @Mapping(target = "categoria", source = "categoria", qualifiedByName = "id")
     TarefaDTO toDto(Tarefa s);
 }

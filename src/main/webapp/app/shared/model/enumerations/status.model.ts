@@ -3,5 +3,7 @@ export enum Status {
 
   FAZENDO = 'Fazendo',
 
-  FEITO = 'Feito',
+  FEITA = 'Feita',
+
+  ARQUIVADA = 'Arquivada',
 }
