@@ -29,6 +29,9 @@
             <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="assigneed_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="categoria_id" type="bigint">
                 <constraints nullable="true" />
             </column>

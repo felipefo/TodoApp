@@ -109,6 +109,9 @@ export const Tarefa = (props: ITarefaProps) => {
                   <Translate contentKey="todo2App.tarefa.user">User</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
+                  <Translate contentKey="todo2App.tarefa.assigneed">Assigneed</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
                   <Translate contentKey="todo2App.tarefa.categoria">Categoria</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -129,6 +132,7 @@ export const Tarefa = (props: ITarefaProps) => {
                     <Translate contentKey={`todo2App.Status.${tarefa.status}`} />
                   </td>
                   <td>{tarefa.user ? tarefa.user.login : ''}</td>
+                  <td>{tarefa.assigneed ? tarefa.assigneed.login : ''}</td>
                   <td>{tarefa.categoria ? <Link to={`categoria/${tarefa.categoria.id}`}>{tarefa.categoria.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

@@ -31,6 +31,13 @@
     },
     {
       "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "tarefa",
+      "relationshipName": "assigneed",
+      "otherEntityField": "login"
+    },
+    {
+      "relationshipType": "many-to-one",
       "otherEntityName": "categoria",
       "otherEntityRelationshipName": "tarefa",
       "relationshipName": "categoria"

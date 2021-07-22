@@ -55,6 +55,8 @@ public class TarefaCriteria implements Serializable, Criteria {
 
     private LongFilter userId;
 
+    private LongFilter assigneedId;
+
     private LongFilter categoriaId;
 
     public TarefaCriteria() {}
@@ -66,6 +68,7 @@ public class TarefaCriteria implements Serializable, Criteria {
         this.dateCriacao = other.dateCriacao == null ? null : other.dateCriacao.copy();
         this.status = other.status == null ? null : other.status.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
+        this.assigneedId = other.assigneedId == null ? null : other.assigneedId.copy();
         this.categoriaId = other.categoriaId == null ? null : other.categoriaId.copy();
     }
 
@@ -164,6 +167,21 @@ public class TarefaCriteria implements Serializable, Criteria {
         this.userId = userId;
     }
 
+    public LongFilter getAssigneedId() {
+        return assigneedId;
+    }
+
+    public LongFilter assigneedId() {
+        if (assigneedId == null) {
+            assigneedId = new LongFilter();
+        }
+        return assigneedId;
+    }
+
+    public void setAssigneedId(LongFilter assigneedId) {
+        this.assigneedId = assigneedId;
+    }
+
     public LongFilter getCategoriaId() {
         return categoriaId;
     }
@@ -195,13 +213,14 @@ public class TarefaCriteria implements Serializable, Criteria {
             Objects.equals(dateCriacao, that.dateCriacao) &&
             Objects.equals(status, that.status) &&
             Objects.equals(userId, that.userId) &&
+            Objects.equals(assigneedId, that.assigneedId) &&
             Objects.equals(categoriaId, that.categoriaId)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, descricao, dueDate, dateCriacao, status, userId, categoriaId);
+        return Objects.hash(id, descricao, dueDate, dateCriacao, status, userId, assigneedId, categoriaId);
     }
 
     // prettier-ignore
@@ -214,6 +233,7 @@ public class TarefaCriteria implements Serializable, Criteria {
             (dateCriacao != null ? "dateCriacao=" + dateCriacao + ", " : "") +
             (status != null ? "status=" + status + ", " : "") +
             (userId != null ? "userId=" + userId + ", " : "") +
+            (assigneedId != null ? "assigneedId=" + assigneedId + ", " : "") +
             (categoriaId != null ? "categoriaId=" + categoriaId + ", " : "") +
             "}";
     }

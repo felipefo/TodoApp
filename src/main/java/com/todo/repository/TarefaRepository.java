@@ -13,4 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface TarefaRepository extends JpaRepository<Tarefa, Long>, JpaSpecificationExecutor<Tarefa> {
     @Query("select tarefa from Tarefa tarefa where tarefa.user.login = ?#{principal.username}")
     List<Tarefa> findByUserIsCurrentUser();
+
+    @Query("select tarefa from Tarefa tarefa where tarefa.assigneed.login = ?#{principal.username}")
+    List<Tarefa> findByAssigneedIsCurrentUser();
 }

@@ -25,6 +25,8 @@ public class TarefaDTO implements Serializable {
 
     private UserDTO user;
 
+    private UserDTO assigneed;
+
     private CategoriaDTO categoria;
 
     public Long getId() {
@@ -75,6 +77,14 @@ public class TarefaDTO implements Serializable {
         this.user = user;
     }
 
+    public UserDTO getAssigneed() {
+        return assigneed;
+    }
+
+    public void setAssigneed(UserDTO assigneed) {
+        this.assigneed = assigneed;
+    }
+
     public CategoriaDTO getCategoria() {
         return categoria;
     }
@@ -114,6 +124,7 @@ public class TarefaDTO implements Serializable {
             ", dateCriacao='" + getDateCriacao() + "'" +
             ", status='" + getStatus() + "'" +
             ", user=" + getUser() +
+            ", assigneed=" + getAssigneed() +
             ", categoria=" + getCategoria() +
             "}";
     }

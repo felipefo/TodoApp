@@ -104,6 +104,12 @@ public class TarefaQueryService extends QueryService<Tarefa> {
                         buildSpecification(criteria.getUserId(), root -> root.join(Tarefa_.user, JoinType.LEFT).get(User_.id))
                     );
             }
+            if (criteria.getAssigneedId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getAssigneedId(), root -> root.join(Tarefa_.assigneed, JoinType.LEFT).get(User_.id))
+                    );
+            }
             if (criteria.getCategoriaId() != null) {
                 specification =
                     specification.and(

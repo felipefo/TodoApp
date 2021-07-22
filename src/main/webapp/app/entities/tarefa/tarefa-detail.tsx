@@ -59,6 +59,10 @@ export const TarefaDetail = (props: ITarefaDetailProps) => {
           </dt>
           <dd>{tarefaEntity.user ? tarefaEntity.user.login : ''}</dd>
           <dt>
+            <Translate contentKey="todo2App.tarefa.assigneed">Assigneed</Translate>
+          </dt>
+          <dd>{tarefaEntity.assigneed ? tarefaEntity.assigneed.login : ''}</dd>
+          <dt>
             <Translate contentKey="todo2App.tarefa.categoria">Categoria</Translate>
           </dt>
           <dd>{tarefaEntity.categoria ? tarefaEntity.categoria.id : ''}</dd>

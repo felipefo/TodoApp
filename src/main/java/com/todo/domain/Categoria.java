@@ -26,7 +26,7 @@ public class Categoria implements Serializable {
     private String descricao;
 
     @OneToMany(mappedBy = "categoria")
-    @JsonIgnoreProperties(value = { "user", "categoria" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "assigneed", "categoria" }, allowSetters = true)
     private Set<Tarefa> tarefas = new HashSet<>();
 
     @ManyToOne

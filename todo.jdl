@@ -20,12 +20,16 @@ entity Categoria {
 // defining multiple OneToMany relationships with comments
 relationship OneToMany {
     Categoria to Tarefa,
+   
 }
 
 
 relationship ManyToOne {
   Tarefa {user(login)} to User
   Categoria{user(login)} to User
+  Tarefa{assigneed(login)} to User
+ 
+
 }
 
 dto * with mapstruct

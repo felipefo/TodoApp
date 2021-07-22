@@ -53,6 +53,7 @@ export const TarefaUpdate = (props: ITarefaUpdateProps) => {
         ...tarefaEntity,
         ...values,
         user: users.find(it => it.id.toString() === values.userId.toString()),
+        assigneed: users.find(it => it.id.toString() === values.assigneedId.toString()),
         categoria: categorias.find(it => it.id.toString() === values.categoriaId.toString()),
       };
 
@@ -152,6 +153,21 @@ export const TarefaUpdate = (props: ITarefaUpdateProps) => {
                   <Translate contentKey="todo2App.tarefa.user">User</Translate>
                 </Label>
                 <AvInput id="tarefa-user" data-cy="user" type="select" className="form-control" name="userId">
+                  <option value="" key="0" />
+                  {users
+                    ? users.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.login}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label for="tarefa-assigneed">
+                  <Translate contentKey="todo2App.tarefa.assigneed">Assigneed</Translate>
+                </Label>
+                <AvInput id="tarefa-assigneed" data-cy="assigneed" type="select" className="form-control" name="assigneedId">
                   <option value="" key="0" />
                   {users
                     ? users.map(otherEntity => (

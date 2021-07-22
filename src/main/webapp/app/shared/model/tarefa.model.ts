@@ -10,6 +10,7 @@ export interface ITarefa {
   dateCriacao?: string | null;
   status?: Status;
   user?: IUser | null;
+  assigneed?: IUser | null;
   categoria?: ICategoria | null;
 }
 

@@ -40,6 +40,9 @@ public class Tarefa implements Serializable {
     private User user;
 
     @ManyToOne
+    private User assigneed;
+
+    @ManyToOne
     @JsonIgnoreProperties(value = { "tarefas", "user" }, allowSetters = true)
     private Categoria categoria;
 
@@ -120,6 +123,19 @@ public class Tarefa implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getAssigneed() {
+        return this.assigneed;
+    }
+
+    public Tarefa assigneed(User user) {
+        this.setAssigneed(user);
+        return this;
+    }
+
+    public void setAssigneed(User user) {
+        this.assigneed = user;
     }
 
     public Categoria getCategoria() {
